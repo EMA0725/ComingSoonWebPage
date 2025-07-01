@@ -2,28 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>The House of मारवाड़ - Coming Soon</title>
-
   <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&family=Playfair+Display&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
-  <!-- Example Marwari/Rajasthani Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Yatra+One&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&family=Playfair+Display&family=Cormorant+Garamond:ital,wght@1,500&family=Yatra+One&display=swap" rel="stylesheet" />
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-
     html, body {
       height: 100%;
       font-family: 'Playfair Display', serif;
       color: #fff;
       overflow: hidden;
+      background-color: #000;
     }
-
     .bg-slider {
       position: fixed;
       top: 0;
@@ -33,23 +28,20 @@
       overflow: hidden;
       z-index: 0;
     }
-
     .bg-slider img {
       position: absolute;
-      top: 0;
+      bottom: 0;
       left: 0;
-      width: 100vw;
+      width: 100%;
       height: 100vh;
       object-fit: cover;
-      object-position: center;
+      object-position: bottom;
       opacity: 0;
       transition: opacity 1s ease-in-out;
     }
-
     .bg-slider img.active {
       opacity: 1;
     }
-
     .overlay {
       position: fixed;
       top: 0;
@@ -59,7 +51,6 @@
       background-color: rgba(0, 0, 0, 0.4);
       z-index: 1;
     }
-
     .content {
       position: relative;
       height: 100vh;
@@ -70,9 +61,8 @@
       text-align: center;
       padding: 20px;
       z-index: 2;
-      transform: translateY(-90px); /* moved slightly upward */
+      transform: translateY(-60px);
     }
-
     .title {
       display: flex;
       align-items: center;
@@ -80,40 +70,35 @@
       flex-wrap: wrap;
       margin-bottom: 0.1rem;
     }
-
     .adj-inline {
       font-size: 1.2rem;
-      color: #fff;
       margin-right: 0.5rem;
-      font-family: 'Playfair Display', serif;
     }
-
     .marwad {
       font-size: 5rem;
-      font-weight: 700;
-      font-family: 'Baloo 2', cursive;
-      color: #f8c471;
+      font-family: 'Yatra One', cursive;
+      color: #FF9933;
     }
-
     .subtitle {
       font-size: 1.4rem;
       max-width: 25rem;
       line-height: 1.5;
-      color: #ffffff;
+      color: #ffebcc;
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
       margin-top: 0.2rem;
       transition: all 0.5s ease-in-out;
     }
-
     .main-heading {
       margin-top: 3.5rem;
       font-size: 2.5rem;
-      font-family: 'Yatra One', cursive; /* You can use another Rajasthani-looking font */
+      font-family: 'Yatra One', cursive;
       color: #ffe6b3;
-      text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
     }
-
+    .main-heading .marwad-highlight {
+      color: #FF9933;
+    }
     .rajasthani-box {
       margin-top: 1rem;
       font-size: 1.3rem;
@@ -123,55 +108,91 @@
       border: 3px double #ffdd99;
       border-radius: 15px;
       background: rgba(255, 215, 128, 0.1);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     }
-
     .content > * {
       opacity: 0;
       animation: fadeIn 1.5s ease forwards;
     }
-
-    .title {
-      animation-delay: 0.5s;
-    }
-
-    .subtitle {
-      animation-delay: 1s;
-    }
-
-    .main-heading {
-      animation-delay: 1.5s;
-    }
-
-    .rajasthani-box {
-      animation-delay: 2s;
-    }
-
+    .title { animation-delay: 0.5s; }
+    .subtitle { animation-delay: 1s; }
+    .main-heading { animation-delay: 1.5s; }
+    .rajasthani-box { animation-delay: 2s; }
     @keyframes fadeIn {
-      from {
-        transform: translateY(20px);
-        opacity: 0;
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @media (max-width: 600px) {
+      .marwad { font-size: 3rem; }
+      .main-heading { font-size: 1.8rem; }
+      .subtitle { font-size: 1.2rem; }
+      .content { transform: translateY(-30px); }
+    }
+    /* Audio Play/Pause Button */
+    .music-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(255, 153, 51, 0.8);
+      color: white;
+      font-size: 28px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      z-index: 10;
+      box-shadow: 0 0 12px rgba(255, 153, 51, 0.7);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+    }
+    .music-toggle:hover {
+      background: rgba(255, 153, 51, 1);
+      box-shadow: 0 0 20px rgba(255, 153, 51, 0.9);
+    }
+    /* Dust blowing effect - horizontal drifting small dust particles */
+    .dust {
+      position: fixed;
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 204, 153, 0.6);
+      border-radius: 50%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      animation-timing-function: linear;
+      opacity: 0.7;
+      filter: drop-shadow(0 0 4px #ffcc99);
+      z-index: 2;
+    }
+    @keyframes driftRight {
+      0% {
+        transform: translateX(-10px) translateY(0) scale(1);
+        opacity: 0.7;
       }
-      to {
-        transform: translateY(0);
-        opacity: 1;
+      50% {
+        opacity: 0.4;
+      }
+      100% {
+        transform: translateX(110vw) translateY(10px) scale(1.3);
+        opacity: 0;
       }
     }
   </style>
 </head>
 <body>
-
-  <!-- Background Image Slider -->
   <div class="bg-slider">
-    <img src="./r1.jpg" class="active" alt="Background Image 1" />
-    <img src="./r2.jpg" alt="Background Image 2" />
-    <img src="./r3.jpg" alt="Background Image 3" />
-    <img src="./r4.jpg" alt="Background Image 4" />
-    <img src="./r5.jpg" alt="Background Image 5" />
-    <img src="./r6.jpg" alt="Background Image 6" />
+    <img src="r2.jpg" class="active" alt="Background Image 2" />
+    <img src="r3.jpg" alt="Background Image 3" />
+    <img src="r4.jpg" alt="Background Image 4" />
+    <img src="r5.jpg" alt="Background Image 5" />
+    <img src="r7.jpg" alt="Background Image 7" />
+    <img src="r10.jpg" alt="Background Image 10" />
   </div>
-
-  <!-- Page Content -->
+  <div class="overlay"></div>
+  <!-- Content -->
   <div class="content">
     <div class="title">
       <span class="adj-inline">[adj.]</span>
@@ -180,24 +201,87 @@
     <div class="subtitle">
       Where timeless tradition meets opulent elegance, and every breeze whispers stories of royalty.
     </div>
-
-    <!-- New Heading and Styled Coming Soon -->
-    <div class="main-heading">The House of मारवाड़</div>
+    <div class="main-heading">The House of <span class="marwad-highlight">मारवाड़</span></div>
     <div class="rajasthani-box">Coming Soon</div>
   </div>
-
+  <!-- Audio Control -->
+  <div class="music-toggle" id="music-toggle" aria-label="Toggle audio play/pause" role="button" tabindex="0">▶</div>
+  <audio id="rajasthani-audio" loop>
+    <source src="bgm.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const images = document.querySelectorAll('.bg-slider img');
-      let current = 0;
+    // Background Image slider
+    const images = document.querySelectorAll('.bg-slider img');
+    let current = 0;
+    setInterval(() => {
+      images[current].classList.remove('active');
+      current = (current + 1) % images.length;
+      images[current].classList.add('active');
+    }, 11000);
 
-      setInterval(() => {
-        images[current].classList.remove('active');
-        current = (current + 1) % images.length;
-        images[current].classList.add('active');
-      }, 7000);
+    // Audio play/pause
+    const audio = document.getElementById('rajasthani-audio');
+    const toggleBtn = document.getElementById('music-toggle');
+    let isPlaying = false;
+    function updateButton() {
+      toggleBtn.textContent = isPlaying ? '⏸' : '▶';
+    }
+    toggleBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        audio.pause();
+      } else {
+        audio.play();
+      }
     });
-  </script>
+    audio.addEventListener('play', () => {
+      isPlaying = true;
+      updateButton();
+    });
+    audio.addEventListener('pause', () => {
+      isPlaying = false;
+      updateButton();
+    });
 
+    // Start audio after user interaction (to avoid autoplay blocking)
+    // Start audio on first user click anywhere on the page
+function startAudioOnUserClick() {
+  if (!isPlaying) {
+    audio.play().catch(() => {});
+  }
+  document.removeEventListener('click', startAudioOnUserClick);
+}
+document.addEventListener('click', startAudioOnUserClick);
+
+
+    // Dust effect - generate dust particles drifting horizontally
+    const dustCount = 80;
+    const dustContainer = document.createElement('div');
+    dustContainer.style.position = 'fixed';
+    dustContainer.style.top = '0';
+    dustContainer.style.left = '0';
+    dustContainer.style.width = '100vw';
+    dustContainer.style.height = '100vh';
+    dustContainer.style.pointerEvents = 'none';
+    dustContainer.style.zIndex = '2';
+    document.body.appendChild(dustContainer);
+
+    function createDustParticle() {
+      const dust = document.createElement('div');
+      dust.classList.add('dust');
+      // Randomize start vertical position
+      const startTop = Math.random() * window.innerHeight;
+      dust.style.top = `${startTop}px`;
+      // Randomize animation duration (longer for slower dust)
+      const duration = 10 + Math.random() * 15; // 10 to 25 seconds
+      dust.style.animation = `driftRight ${duration}s linear infinite`;
+      // Randomize start delay to scatter dust in time
+      dust.style.animationDelay = `${Math.random() * duration}s`;
+      dustContainer.appendChild(dust);
+    }
+    for (let i = 0; i < dustCount; i++) {
+      createDustParticle();
+    }
+  </script>
 </body>
 </html>
